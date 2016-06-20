@@ -2,6 +2,8 @@
 
 A chinese identity card generator.
 
+![screenshot](screenshot.png)
+
 
 
 ## Usage
