@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>IdentityCard Generator</title>
+        <style type="text/css">
+            table.gridtable {
+                font-family: verdana,arial,sans-serif;
+                font-size:12px;
+                color:#333333;
+                border-width: 1px;
+                border-color: #666666;
+                border-collapse: collapse;
+            }
+            table.gridtable th {
+                border-width: 1px;
+                padding: 5px;
+                border-style: solid;
+                border-color: #666666;
+                background-color: #dedede;
+            }
+            table.gridtable td {
+                border-width: 1px;
+                padding: 5px;
+                border-style: solid;
+                border-color: #666666;
+                background-color: #ffffff;
+            }
+        </style>
+    </head>
+    <body>
+        <table class="gridtable" align="center" width="75%">
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Birthday</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Address</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td width="10%">{{user.name}}</td>
+                <td width="25%">{{user.id}}</td>
+                <td width="15%">{{user.birthday}}</td>
+                <td width="5%">{{user.age}}</td>
+                <td width="5%">{{user.sex}}</td>
+                <td>{{user.address}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
