@@ -3513,9 +3513,9 @@ class IdentityCard(object):
 
         now = datetime.datetime.now()
         year = now.year - random.randint(self.__min_age, self.__max_age)
-        month = random.randint(
-            1, now.month) if year == now.year else random.randint(1, 12)
-        day = random.randint(1, calendar.monthrange(year, month)[1])
+        flag = (year == now.year or year == now.year - self.__min_age)
+        month = random.randint(1, now.month) if flag else random.randint(1, 12)
+        day = random.randint(1, now.day) if flag else random.randint(1, calendar.monthrange(year, month)[1])
         birthday = datetime.datetime(year, month, day)
 
         code = ''
