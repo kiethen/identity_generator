@@ -17,7 +17,7 @@ monkey.patch_all()
 app = Flask(__name__)
 
 
-@app.route('/api/identidycard', methods=['GET'])
+@app.route('/api/identitycard', methods=['GET'])
 def api_identidycard():
     num = int(request.args.get('num', '1'))
     min = int(request.args.get('min', '0'))
