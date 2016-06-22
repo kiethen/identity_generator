@@ -37,7 +37,7 @@ def api_identidycard():
         tmp.append({'name': r[0], 'id': r[1], 'birthday': r[2], 'age': r[3], 'sex': r[4], 'address': r[5]})
 
     return Response(
-        response=json.dumps(tmp, ensure_ascii=False, indent=2),
+        response=json.dumps(tmp if len(tmp) > 1 else tmp[0], ensure_ascii=False, indent=2),
         status=200,
         mimetype="application/json;charset=utf-8")
 
