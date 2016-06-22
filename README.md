@@ -32,13 +32,13 @@ Options:
 
 http://identity.daoapp.io/api
 
-http://identity.daoapp.io/api/?num=2
+http://identity.daoapp.io/api?num=2
 
-http://identity.daoapp.io/api/?num=5&min=20
+http://identity.daoapp.io/api?num=5&min=20
 
-http://identity.daoapp.io/api/?num=10&min=20&max=40
+http://identity.daoapp.io/api?num=10&min=20&max=40
 
-http://identity.daoapp.io/api/?num=10&min=20&max=40&sex=1
+http://identity.daoapp.io/api?num=10&min=20&max=40&sex=1
 
 
 
