@@ -30,27 +30,27 @@ Options:
 
 ### API
 
-http://127.0.0.1:5000/api/identidycard
+http://identity.daoapp.io/api
 
-http://127.0.0.1:5000/api/identidycard?num=2
+http://identity.daoapp.io/api/?num=2
 
-http://127.0.0.1:5000/api/identidycard?num=5&min=20
+http://identity.daoapp.io/api/?num=5&min=20
 
-http://127.0.0.1:5000/api/identidycard?num=10&min=20&max=40
+http://identity.daoapp.io/api/?num=10&min=20&max=40
 
-http://127.0.0.1:5000/api/identidycard?num=10&min=20&max=40&sex=1
+http://identity.daoapp.io/api/?num=10&min=20&max=40&sex=1
 
 
 
 ### WEB
 
-http://127.0.0.1:5000/?num=2
+http://identity.daoapp.io/?num=2
 
-http://127.0.0.1:5000/?num=5&min=20
+http://identity.daoapp.io/?num=5&min=20
 
-http://127.0.0.1:5000/?num=10&min=20&max=40
+http://identity.daoapp.io/?num=10&min=20&max=40
 
-http://127.0.0.1:5000/?num=10&min=20&max=40&sex=1
+http://identity.daoapp.io/?num=10&min=20&max=40&sex=1
 
 
 
