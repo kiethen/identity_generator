@@ -17,8 +17,15 @@ monkey.patch_all()
 app = Flask(__name__)
 
 
-@app.route('/api/identitycard', methods=['GET'])
+@app.route('/api', methods=['GET'])
 def api_identidycard():
+    for arg in request.args:
+        try:
+            if int(request.args.get(arg)) < 0:
+                return "Invalid arguments."
+        except ValueError:
+            return "Invalid arguments."
+
     num = int(request.args.get('num', '1'))
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
@@ -37,6 +44,13 @@ def api_identidycard():
 
 @app.route('/', methods=['GET'])
 def web_identidycard():
+    for arg in request.args:
+        try:
+            if int(request.args.get(arg)) < 0:
+                return "Invalid arguments."
+        except ValueError:
+            return "Invalid arguments."
+
     num = int(request.args.get('num', '1'))
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
