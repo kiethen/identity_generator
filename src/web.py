@@ -27,6 +27,8 @@ def api_identidycard():
             return "Invalid arguments."
 
     num = int(request.args.get('num', '1'))
+    if num > 100:
+        num = 100
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
@@ -52,6 +54,8 @@ def web_identidycard():
             return "Invalid arguments."
 
     num = int(request.args.get('num', '1'))
+    if num > 100:
+        num = 100
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
