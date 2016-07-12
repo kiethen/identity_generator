@@ -28,7 +28,7 @@ class IdentityCard(object):
         for child in root:
             self.__areas.append(child.attrib)
 
-    def __random_card_number(self, min_age=0, max_age=100, sex=0, birth=None):
+    def __random_card_number(self, min_age=0, max_age=100, sex=0, year=0, month=0, day=0):
         area = ''
         while True:
             rd = random.randint(1, len(self.__areas))
@@ -49,18 +49,16 @@ class IdentityCard(object):
                 if (sex == 1 and int(order_code) % 2 == 0) or (sex == 2 and int(order_code) % 2 != 0):
                     break
 
-        if birth:
-            code_number = area + birth + code
-        else:
-            now = datetime.datetime.now()
-            year = now.year - random.randint(min_age, max_age)
-            flag = (year == now.year or year == now.year - min_age)
-            month = random.randint(1, now.month) if flag else random.randint(1, 12)
-            day = random.randint(1, now.day) if flag else random.randint(
-                1, calendar.monthrange(year, month)[1])
-            birthday = datetime.datetime(year, month, day)
+        now = datetime.datetime.now()
+        _year = year if year else now.year - random.randint(min_age, max_age)
+        flag = (_year == now.year or _year == now.year - min_age)
+        _month = month if month else random.randint(1, now.month) if flag else random.randint(1, 12)
+        _day = day if day else (random.randint(1, now.day) if flag else random.randint(
+            1, calendar.monthrange(_year, _month)[1]))
 
-            code_number = area + datetime.datetime.strftime(birthday, '%Y%m%d') + code
+        birthday = datetime.datetime(_year, _month, _day)
+
+        code_number = area + datetime.datetime.strftime(birthday, '%Y%m%d') + code
 
         sum = 0.0
         check_code = None
@@ -148,13 +146,17 @@ def main():
                       type='int', default=100, help='Maximum age [default: %default]')
     parser.add_option('--sex', action='store', dest='sex',
                       type='int', default=0, help='Random 0, Female 1 or Male 2 [default: %default]')
-    parser.add_option('--birth', action='store', dest='birth',
-                      type='string', default=None, help='Birthday [default: %default]')
+    parser.add_option('--year', action='store', dest='year',
+                      type='int', default=0, help='Year of birthday [default: %default]')
+    parser.add_option('--month', action='store', dest='month',
+                      type='int', default=0, help='Month of birthday [default: %default]')
+    parser.add_option('--day', action='store', dest='day',
+                      type='int', default=0, help='Day of birthday [default: %default]')
     (options, args) = parser.parse_args()
 
     cls = IdentityCard()
     cls.initialize_areas()
-    ret = cls.generator(options.num, options.min, options.max, options.sex, options.birth)
+    ret = cls.generator(options.num, options.min, options.max, options.sex, options.year, options.month, options.day)
     for r in ret:
         print ', '.join(r)
 

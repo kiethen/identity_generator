@@ -33,8 +33,10 @@ def api_identidycard():
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
-    birth = request.args.get('birth', None)
-    ret = cls.generator(num, min, max, sex, birth)
+    year = int(request.args.get('year', '0'))
+    month = int(request.args.get('month', '0'))
+    day = int(request.args.get('day', '0'))
+    ret = cls.generator(num, min, max, sex, year, month, day)
     tmp = []
     for r in ret:
         tmp.append({'name': r[0], 'id': r[1], 'birthday': r[2], 'age': r[3], 'sex': r[4], 'address': r[5]})
@@ -60,8 +62,10 @@ def web_identidycard():
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
-    birth = request.args.get('birth', None)
-    ret = cls.generator(num, min, max, sex, birth)
+    year = int(request.args.get('year', '0'))
+    month = int(request.args.get('month', '0'))
+    day = int(request.args.get('day', '0'))
+    ret = cls.generator(num, min, max, sex, year, month, day)
     users = []
     for r in ret:
         users.append({'name': r[0], 'id': r[1], 'birthday': r[2], 'age': r[3], 'sex': r[4], 'address': r[5]})
