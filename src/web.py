@@ -15,7 +15,8 @@ if sys.getdefaultencoding() != default_encoding:
 monkey.patch_all()
 
 app = Flask(__name__)
-
+cls = IdentityCard()
+cls.initialize_areas()
 
 @app.route('/api', methods=['GET'])
 def api_identidycard():
@@ -32,8 +33,8 @@ def api_identidycard():
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
-    cls = IdentityCard(num, min, max, sex)
-    ret = cls.generator()
+    birth = request.args.get('birth', None)
+    ret = cls.generator(num, min, max, sex, birth)
     tmp = []
     for r in ret:
         tmp.append({'name': r[0], 'id': r[1], 'birthday': r[2], 'age': r[3], 'sex': r[4], 'address': r[5]})
@@ -59,8 +60,8 @@ def web_identidycard():
     min = int(request.args.get('min', '0'))
     max = int(request.args.get('max', '100'))
     sex = int(request.args.get('sex', '0'))
-    cls = IdentityCard(num, min, max, sex)
-    ret = cls.generator()
+    birth = request.args.get('birth', None)
+    ret = cls.generator(num, min, max, sex, birth)
     users = []
     for r in ret:
         users.append({'name': r[0], 'id': r[1], 'birthday': r[2], 'age': r[3], 'sex': r[4], 'address': r[5]})

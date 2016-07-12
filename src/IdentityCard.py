@@ -20,22 +20,15 @@ if sys.getdefaultencoding() != default_encoding:
 class IdentityCard(object):
     """docstring for GenerateID"""
 
-    def __init__(self, num=1, min_age=0, max_age=100, sex=0):
+    def __init__(self, num=1, min_age=0, max_age=100, sex=0, birth=None):
         self.__areas = []
-        self.__num = num
-        self.__min_age = min_age
-        self.__max_age = max_age
-        self.__sex = sex
 
-    def __fill_areas(self):
+    def initialize_areas(self):
         root = ET.fromstring(XML_STRING)
         for child in root:
             self.__areas.append(child.attrib)
 
-    def __random_card_number(self):
-        if not self.__areas:
-            self.__fill_areas()
-
+    def __random_card_number(self, min_age=0, max_age=100, sex=0, birth=None):
         area = ''
         while True:
             rd = random.randint(1, len(self.__areas))
@@ -43,26 +36,31 @@ class IdentityCard(object):
             if area[-2:] != "00":
                 break
 
-        now = datetime.datetime.now()
-        year = now.year - random.randint(self.__min_age, self.__max_age)
-        flag = (year == now.year or year == now.year - self.__min_age)
-        month = random.randint(1, now.month) if flag else random.randint(1, 12)
-        day = random.randint(1, now.day) if flag else random.randint(1, calendar.monthrange(year, month)[1])
-        birthday = datetime.datetime(year, month, day)
-
         code = ''
         order_code = '0'
+        code_number = ''
 
-        if self.__sex == 0:
+        if sex == 0:
             code = str(random.randint(1000, 9999))
         else:
             while True:
                 code = str(random.randint(1000, 9999))
                 order_code = code[0:3]
-                if (self.__sex == 1 and int(order_code) % 2 == 0) or (self.__sex == 2 and int(order_code) % 2 != 0):
+                if (sex == 1 and int(order_code) % 2 == 0) or (sex == 2 and int(order_code) % 2 != 0):
                     break
 
-        code_number = area + datetime.datetime.strftime(birthday, '%Y%m%d') + code
+        if birth:
+            code_number = area + birth + code
+        else:
+            now = datetime.datetime.now()
+            year = now.year - random.randint(min_age, max_age)
+            flag = (year == now.year or year == now.year - min_age)
+            month = random.randint(1, now.month) if flag else random.randint(1, 12)
+            day = random.randint(1, now.day) if flag else random.randint(
+                1, calendar.monthrange(year, month)[1])
+            birthday = datetime.datetime(year, month, day)
+
+            code_number = area + datetime.datetime.strftime(birthday, '%Y%m%d') + code
 
         sum = 0.0
         check_code = None
@@ -75,11 +73,11 @@ class IdentityCard(object):
 
         return idcard_number
 
-    def generator(self):
+    def generator(self, num=1, *args, **kwargs):
         idcards = []
 
-        while len(idcards) < self.__num:
-            idcard = self.__analysis(self.__random_card_number())
+        while len(idcards) < num:
+            idcard = self.__analysis(self.__random_card_number(*args, **kwargs))
             if idcard not in idcards:
                 idcards.append(idcard)
 
@@ -99,13 +97,15 @@ class IdentityCard(object):
                 address.append(a['name'])
             if len(address) == 3:
                 break
-        addr = ''.join(reduce(lambda x, y: x if y in x else x + [y], [[], ] + address))
+        addr = ''.join(
+            reduce(lambda x, y: x if y in x else x + [y], [[], ] + address))
         age_code = idcard_number[6:14]
         try:
             year = age_code[0:4]
             month = age_code[4:6]
             day = age_code[-2:]
-            age = self.__get_age(datetime.datetime(int(year), int(month), int(day)))
+            age = self.__get_age(datetime.datetime(
+                int(year), int(month), int(day)))
         except:
             raise
 
@@ -138,7 +138,8 @@ class IdentityCard(object):
 
 
 def main():
-    parser = OptionParser(usage="usage: %prog [options] arg1 arg2", version="%prog {}".format(__VERSION))
+    parser = OptionParser(
+        usage="usage: %prog [options] arg1 arg2", version="%prog {}".format(__VERSION))
     parser.add_option('--num', action='store', dest='num',
                       type='int', default=1, help='Number of idcardnumber [default: %default]')
     parser.add_option('--min', action='store', dest='min',
@@ -147,10 +148,13 @@ def main():
                       type='int', default=100, help='Maximum age [default: %default]')
     parser.add_option('--sex', action='store', dest='sex',
                       type='int', default=0, help='Random 0, Female 1 or Male 2 [default: %default]')
+    parser.add_option('--birth', action='store', dest='birth',
+                      type='string', default=None, help='Birthday [default: %default]')
     (options, args) = parser.parse_args()
 
-    cls = IdentityCard(options.num, options.min, options.max, options.sex)
-    ret = cls.generator()
+    cls = IdentityCard()
+    cls.initialize_areas()
+    ret = cls.generator(options.num, options.min, options.max, options.sex, options.birth)
     for r in ret:
         print ', '.join(r)
 
