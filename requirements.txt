@@ -1,2 +1,3 @@
 Flask==0.11.1
 gevent==1.1.1
+webargs=1.3.4
