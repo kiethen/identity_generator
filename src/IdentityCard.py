@@ -9,7 +9,7 @@ import math
 from optparse import OptionParser
 from AreaInfo import XML_STRING
 
-__VERSION = '0.0.1'
+__VERSION = '0.0.2'
 
 default_encoding = 'utf-8'
 if sys.getdefaultencoding() != default_encoding:
@@ -147,11 +147,11 @@ def main():
     parser.add_option('--sex', action='store', dest='sex',
                       type='int', default=0, help='Random 0, Female 1 or Male 2 [default: %default]')
     parser.add_option('--year', action='store', dest='year',
-                      type='int', default=0, help='Year of birthday [default: %default]')
+                      type='int', default=0, help='Birth year [default: %default]')
     parser.add_option('--month', action='store', dest='month',
-                      type='int', default=0, help='Month of birthday [default: %default]')
+                      type='int', default=0, help='Birth month [default: %default]')
     parser.add_option('--day', action='store', dest='day',
-                      type='int', default=0, help='Day of birthday [default: %default]')
+                      type='int', default=0, help='Birth day [default: %default]')
     (options, args) = parser.parse_args()
 
     cls = IdentityCard()
