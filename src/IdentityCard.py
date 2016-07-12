@@ -56,7 +56,10 @@ class IdentityCard(object):
         _day = day if day else (random.randint(1, now.day) if flag else random.randint(
             1, calendar.monthrange(_year, _month)[1]))
 
-        birthday = datetime.datetime(_year, _month, _day)
+        try:
+            birthday = datetime.datetime(_year, _month, _day)
+        except ValueError:
+            birthday = datetime.datetime(_year, _month, calendar.monthrange(_year, _month)[1])
 
         code_number = area + datetime.datetime.strftime(birthday, '%Y%m%d') + code
 
