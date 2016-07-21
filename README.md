@@ -18,6 +18,7 @@ Options:
   --num=NUM   Number of idcardnumber [default: 1]
   --min=MIN   Minimum age [default: 0]
   --max=MAX   Maximum age [default: 100]
+  --sex=SEX      Random 0, Female 1 or Male 2 [default: 0]
   --year=YEAR    Birth year [default: 0] 
   --month=MONTH   Birth month [default: 0] 
   --day=DAY      Birth day [default: 0]
