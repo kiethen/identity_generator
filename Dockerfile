@@ -3,7 +3,7 @@ FROM centos
 
 # Install env
 RUN yum -y install epel-release && yum clean all
-RUN yum -y install python-pip git gcc python-devel && yum clean all
+RUN yum -y install python-pip gcc python-devel && yum clean all
 
 # Set timezone
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -11,10 +11,10 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV LANG 'en_US.UTF-8'
 ENV LC_ALL 'en_US.UTF-8'
 
-# Pull
-RUN git clone https://github.com/phinexdaz/identity_generator.git
+COPY requirements.txt /opt
+COPY src /opt
 
-WORKDIR identity_generator
+WORKDIR opt
 
 RUN pip install -r requirements.txt
 
