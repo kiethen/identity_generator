@@ -20,4 +20,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "src/web.py"]
+CMD ["python", "web.py"]

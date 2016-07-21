@@ -13,5 +13,11 @@ node {
         stage 'Push Image'
         // Push image to registry
         img.push()
+
+        stage 'Test Image'
+        // Run testcase
+        img.inside() {
+            sh 'python test.py'
+        }
     }
 }
